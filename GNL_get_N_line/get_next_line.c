@@ -6,7 +6,7 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 00:30:31 by mbelalou          #+#    #+#             */
-/*   Updated: 2017/12/29 17:46:16 by mbelalou         ###   ########.fr       */
+/*   Updated: 2017/12/29 18:42:41 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		is_eol_char(char *buf)
 	i = 0;
 	while (buf[i] || i < BUFF_SIZE)
 	{
+//		ft_putchar(buf[i]);
 		if (buf[i] == '\n')
 			 return 1;
 		i++;
@@ -39,7 +40,16 @@ int		get_next_line(const int fd, char **line)
 	i = 0;
 	if(rest)
 	{
-//		ft_putstr("voila voila");
+		if(!is_eol_char(rest))
+		{
+			while ((not_found_eol) && read(fd, buf, BUFF_SIZE))
+			{
+				rest = ft_strjoin(rest, buf);
+				not_found_eol = !is_eol_char(rest);
+			}
+			ft_putstr("voila voila");
+		}
+		//ft_putstr(rest);
 		i = 0;
 		while (rest[i] && rest[i] != '\n')
 		{
@@ -48,7 +58,7 @@ int		get_next_line(const int fd, char **line)
 		}
 		ft_putstr(">");
 		ft_putstr("\n rest : ");
-		ft_putnbr(ft_strlen(rest) -i);
+		ft_putnbr(i);
 		if (i != 0)
 		{
 			if (rest[i] == '\n')
@@ -61,7 +71,6 @@ int		get_next_line(const int fd, char **line)
 			rest[len] = '\0';
 		}
 		ft_putstr("\n****\n");
-		rest = NULL;
 	}
 	else
 	{
@@ -86,7 +95,6 @@ int		get_next_line(const int fd, char **line)
 		}
 		rest[len] = '\0';
 		ft_putstr("\n****\n");
-		//	ft_putstr(buf);
 	}
 	ft_putstr("\n--\n");
 	ft_putstr(">");

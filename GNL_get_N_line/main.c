@@ -6,7 +6,7 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 00:33:13 by mbelalou          #+#    #+#             */
-/*   Updated: 2017/12/29 17:41:14 by mbelalou         ###   ########.fr       */
+/*   Updated: 2017/12/29 18:40:34 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(int argc, char **argv)
 	char *line = NULL;
 	fd = ft_open_file(argv[1]);
 	int i = 0;
-	while (i < 5)//(fd2 != 0))
+	while (i < 3)//(fd2 != 0))
 	{
 		ft_putstr("\n\t\t\t-------------------------------------------------\n");
 		ft_putstr("\n i = ");

@@ -6,7 +6,7 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 02:52:57 by mbelalou          #+#    #+#             */
-/*   Updated: 2017/11/24 14:04:04 by mbelalou         ###   ########.fr       */
+/*   Updated: 2017/12/29 18:08:57 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		ln_s2;
 	char	*result;
 
-	ft_putstr("\nstrjoin \t buf <");
+/*	ft_putstr("\nstrjoin \t buf <");
 	ft_putstr(s2);
 	ft_putstr("> \tsize");
 	ft_putnbr(ft_strlen(s2));
 	ft_putstr("> \n");
-
+*/
 	if (s1 && s2)
 	{
 		ln_s1 = ft_strlen(s1);
