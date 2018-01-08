@@ -6,7 +6,7 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 00:30:31 by mbelalou          #+#    #+#             */
-/*   Updated: 2018/01/07 12:13:21 by mbelalou         ###   ########.fr       */
+/*   Updated: 2018/01/08 14:33:57 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int				get_next_line(const int fd, char **line)
 	int				result;
 	char			*temp;
 
-	result = 1;
-	if (fd <= 0 || (line == NULL) || !(*line = ft_strnew(0)))
+	result = 0;
+	if (fd < 0 || (line == NULL) || !(*line = ft_strnew(0)))
 		return (-1);
 	if (!rest || ft_isempty(rest))
 		result = read_file_fd(fd, line, &rest);
@@ -87,5 +87,5 @@ int				get_next_line(const int fd, char **line)
 			result = read_file_fd(fd, line, &rest);
 		}
 	}
-	return ((result > 0) ? 1 : result);
+	return ((ft_strlen(*line) > 0 || result > 0) ? 1 : result);
 }
