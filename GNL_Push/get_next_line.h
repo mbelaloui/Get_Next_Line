@@ -6,14 +6,14 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 00:31:04 by mbelalou          #+#    #+#             */
-/*   Updated: 2018/01/09 19:24:58 by mbelalou         ###   ########.fr       */
+/*   Updated: 2018/01/10 13:14:05 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include "./libft/libft.h"
-# define BUFF_SIZE		4864
+# define BUFF_SIZE		4096
 # define MAXFD			4864
 
 int						get_next_line(const int fd, char **line);
