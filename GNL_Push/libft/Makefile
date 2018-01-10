@@ -6,7 +6,7 @@
 #    By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/13 21:48:22 by mbelalou          #+#    #+#              #
-#    Updated: 2018/01/07 10:37:35 by mbelalou         ###   ########.fr        #
+#    Updated: 2018/01/10 13:10:17 by mbelalou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,7 +101,7 @@ $(NAME)	:	$(SRCS) libft.h
 			@gcc $(FLAGES) $(SRCS) -I.
 			@ar rc $(NAME) $(BIN)
 			@ranlib $(NAME) 
-			echo compilation complited successfully !
+			@@echo compilation complited successfully !
 
 clean	:
 			@rm -fr $(BIN)

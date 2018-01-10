@@ -6,13 +6,45 @@
 /*   By: mbelalou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/22 00:30:31 by mbelalou          #+#    #+#             */
-/*   Updated: 2018/01/08 14:33:57 by mbelalou         ###   ########.fr       */
+/*   Updated: 2018/01/09 19:05:48 by mbelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static	int		read_file_fd(int fd, char **line, char **rest)
+static	t_list_fd	*new_buf_fd(int fd)
+{
+	t_list_fd *temp_result;
+
+	if (!(temp_result = malloc(sizeof(*temp_result))))
+		return (NULL);
+	temp_result->fd = fd;
+	temp_result->rest = NULL;
+	temp_result->next = NULL;
+	return (temp_result);
+}
+
+static	t_list_fd	*get_buf_fd(int fd, t_list_fd **debut)
+{
+	t_list_fd *list;
+
+	list = *debut;
+	if (!list)
+	{
+		*debut = new_buf_fd(fd);
+		return (*debut);
+	}
+	while ((list->fd != fd) && list->next)
+		list = list->next;
+	if (list->fd != fd && !list->next)
+	{
+		list->next = new_buf_fd(fd);
+		list = list->next;
+	}
+	return (list);
+}
+
+static	int			read_file_fd(int fd, char **line, char **rest)
 {
 	char	buf[BUFF_SIZE + 1];
 	int		i;
@@ -41,7 +73,7 @@ static	int		read_file_fd(int fd, char **line, char **rest)
 	return (ret);
 }
 
-static	char	*read_file(char **line, char **src)
+static	char		*read_file(char **line, char **src)
 {
 	int		i;
 	char	*rest;
@@ -64,27 +96,29 @@ static	char	*read_file(char **line, char **src)
 	return (rest);
 }
 
-int				get_next_line(const int fd, char **line)
+int					get_next_line(const int fd, char **line)
 {
-	static	char	*rest;
-	int				result;
-	char			*temp;
+	static	t_list_fd	*list;
+	t_list_fd			*temp_buf;
+	int					result;
+	char				*temp;
 
-	result = 0;
-	if (fd < 0 || (line == NULL) || !(*line = ft_strnew(0)))
+	result = 1;
+	if (fd < 0 || fd > MAXFD || (line == NULL) || !(*line = ft_strnew(0)))
 		return (-1);
-	if (!rest || ft_isempty(rest))
-		result = read_file_fd(fd, line, &rest);
+	temp_buf = get_buf_fd(fd, &list);
+	if (!temp_buf->rest || ft_isempty(temp_buf->rest))
+		result = read_file_fd(fd, line, &(temp_buf->rest));
 	else
 	{
-		if (ft_is_c_in_str('\n', rest))
-			rest = read_file(line, &rest);
+		if (ft_is_c_in_str('\n', temp_buf->rest))
+			temp_buf->rest = read_file(line, &(temp_buf->rest));
 		else
 		{
 			temp = *line;
-			*line = ft_strjoin(*line, rest);
+			*line = ft_strjoin(*line, temp_buf->rest);
 			ft_strdel(&temp);
-			result = read_file_fd(fd, line, &rest);
+			result = read_file_fd(fd, line, &(temp_buf->rest));
 		}
 	}
 	return ((ft_strlen(*line) > 0 || result > 0) ? 1 : result);
